@@ -61,14 +61,14 @@ public class ChatServerFrame extends javax.swing.JFrame {
         serverNameLabel.setMinimumSize(new java.awt.Dimension(153, 20));
         serverNameLabel.setPreferredSize(new java.awt.Dimension(153, 20));
 
-        startStop.setText("Start");
+        startStop.setText("Démarrer");
         startStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startStopActionPerformed(evt);
             }
         });
 
-        quit.setText("Quit");
+        quit.setText("Quitter");
         quit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 quitActionPerformed(evt);
@@ -151,7 +151,7 @@ public class ChatServerFrame extends javax.swing.JFrame {
                 this.serverNameLabel.setEnabled(true);
                 
                 //Change stop button to start button
-                this.startStop.setText("Start");
+                this.startStop.setText("Démarrer");
                 this.startStop.setEnabled(true);
             }
             else{
@@ -176,7 +176,7 @@ public class ChatServerFrame extends javax.swing.JFrame {
                 Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Registered: {0} -> {1}", new Object[]{this.registeredName, remote.getClass().getName()});
                 
                 //Change start button to stop button
-                this.startStop.setText("Stop");
+                this.startStop.setText("Arrêter");
                 this.startStop.setEnabled(true);
             }
         } catch (NotBoundException | RemoteException ex) {

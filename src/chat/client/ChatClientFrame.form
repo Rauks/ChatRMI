@@ -269,6 +269,24 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="menuOptions">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Options"/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+D"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="D&#xe9;filement automatique"/>
+              </Properties>
+              <BindingProperties>
+                <BindingProperty name="selected" source="chatFlow" sourcePath="${autoTextScroll}" target="jCheckBoxMenuItem1" targetPath="selected" updateStrategy="0" immediately="false"/>
+              </BindingProperties>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
       </SubComponents>
     </Menu>
   </NonVisualComponents>
@@ -331,15 +349,15 @@
                   <Group type="102" attributes="0">
                       <Component id="serverHostLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="serverHost" min="-2" pref="158" max="-2" attributes="0"/>
+                      <Component id="serverHost" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="serverChannelLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="serverChannel" min="-2" pref="174" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="pseudoLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="serverChannel" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pseudo" pref="128" max="32767" attributes="0"/>
+                      <Component id="pseudoLabel" min="-2" pref="42" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="pseudo" pref="160" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="connect" min="-2" pref="85" max="-2" attributes="0"/>
                   </Group>
@@ -373,7 +391,7 @@
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="serverHost"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Server :"/>
+                <Property name="text" type="java.lang.String" value="Serveur :"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="pseudoLabel">
@@ -386,7 +404,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="connect">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Connect"/>
+                <Property name="text" type="java.lang.String" value="Connexion"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectActionPerformed"/>
@@ -401,6 +419,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="chat"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serverChannelActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="pseudo">
               <Properties>
@@ -438,7 +459,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="messageSend">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Send"/>
+                <Property name="text" type="java.lang.String" value="Envoyer"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>

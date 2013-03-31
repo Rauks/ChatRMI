@@ -121,7 +121,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="startStop">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Start"/>
+                <Property name="text" type="java.lang.String" value="D&#xe9;marrer"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startStopActionPerformed"/>
@@ -129,7 +129,7 @@
             </Component>
             <Component class="javax.swing.JButton" name="quit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Quit"/>
+                <Property name="text" type="java.lang.String" value="Quitter"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="quitActionPerformed"/>

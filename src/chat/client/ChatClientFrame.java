@@ -52,6 +52,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         errorConnectionDialog = new javax.swing.JFrame();
         errorConnectionPanel = new javax.swing.JPanel();
@@ -75,6 +76,8 @@ public class ChatClientFrame extends javax.swing.JFrame {
         menu = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileQuit = new javax.swing.JMenuItem();
+        menuOptions = new javax.swing.JMenu();
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
 
         errorConnectionDialog.setTitle("Error");
         errorConnectionDialog.setMinimumSize(new java.awt.Dimension(220, 110));
@@ -138,12 +141,12 @@ public class ChatClientFrame extends javax.swing.JFrame {
         serverChannelLabel.setText("Channel :");
 
         serverHostLabel.setLabelFor(serverHost);
-        serverHostLabel.setText("Server :");
+        serverHostLabel.setText("Serveur :");
 
         pseudoLabel.setLabelFor(pseudo);
         pseudoLabel.setText("Pseudo :");
 
-        connect.setText("Connect");
+        connect.setText("Connexion");
         connect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 connectActionPerformed(evt);
@@ -153,6 +156,11 @@ public class ChatClientFrame extends javax.swing.JFrame {
         serverHost.setText("localhost");
 
         serverChannel.setText("chat");
+        serverChannel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverChannelActionPerformed(evt);
+            }
+        });
 
         pseudo.setText("anonymous");
 
@@ -163,15 +171,15 @@ public class ChatClientFrame extends javax.swing.JFrame {
             .addGroup(optionsPanelLayout.createSequentialGroup()
                 .addComponent(serverHostLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverHost, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(serverHost, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(serverChannelLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(serverChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pseudoLabel)
+                .addComponent(serverChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pseudo, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
+                .addComponent(pseudoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pseudo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -189,7 +197,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         mainPanel.add(optionsPanel, java.awt.BorderLayout.PAGE_START);
 
-        messageSend.setText("Send");
+        messageSend.setText("Envoyer");
         messageSend.setEnabled(false);
         messageSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -262,6 +270,18 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         menu.add(menuFile);
 
+        menuOptions.setText("Options");
+
+        jCheckBoxMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
+        jCheckBoxMenuItem1.setText("Défilement automatique");
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, chatFlow, org.jdesktop.beansbinding.ELProperty.create("${autoTextScroll}"), jCheckBoxMenuItem1, org.jdesktop.beansbinding.BeanProperty.create("selected"));
+        bindingGroup.addBinding(binding);
+
+        menuOptions.add(jCheckBoxMenuItem1);
+
+        menu.add(menuOptions);
+
         setJMenuBar(menu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -280,6 +300,8 @@ public class ChatClientFrame extends javax.swing.JFrame {
                 .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -365,6 +387,10 @@ public class ChatClientFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_messageSendActionPerformed
 
+    private void serverChannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverChannelActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_serverChannelActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private chat.client.ChatFlow chatFlow;
     private javax.swing.JScrollPane chatFlowScroll;
@@ -374,10 +400,12 @@ public class ChatClientFrame extends javax.swing.JFrame {
     private javax.swing.JPanel errorConnectionPanel;
     private javax.swing.JButton errorConnectionQuit;
     private javax.swing.JPanel flowPanel;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenuItem menuFileQuit;
+    private javax.swing.JMenu menuOptions;
     private javax.swing.JTextField messageField;
     private javax.swing.JButton messageSend;
     private javax.swing.JPanel optionsPanel;
@@ -388,5 +416,6 @@ public class ChatClientFrame extends javax.swing.JFrame {
     private javax.swing.JLabel serverChannelLabel;
     private javax.swing.JTextField serverHost;
     private javax.swing.JLabel serverHostLabel;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
