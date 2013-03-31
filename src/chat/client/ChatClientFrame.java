@@ -78,7 +78,6 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         errorConnectionDialog.setTitle("Error");
         errorConnectionDialog.setMinimumSize(new java.awt.Dimension(220, 110));
-        errorConnectionDialog.setPreferredSize(new java.awt.Dimension(220, 110));
         errorConnectionDialog.setResizable(false);
         errorConnectionDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -199,6 +198,11 @@ public class ChatClientFrame extends javax.swing.JFrame {
         });
 
         messageField.setEnabled(false);
+        messageField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messageSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout sendPanelLayout = new javax.swing.GroupLayout(sendPanel);
         sendPanel.setLayout(sendPanelLayout);
@@ -212,7 +216,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
         sendPanelLayout.setVerticalGroup(
             sendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(messageField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(messageSend))
         );
 
@@ -224,6 +228,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
         chatFlow.setColumns(20);
         chatFlow.setLineWrap(true);
         chatFlow.setRows(5);
+        chatFlow.setAutoTextScroll(true);
         chatFlow.setEnabled(false);
         chatFlow.setFocusable(false);
         chatFlowScroll.setViewportView(chatFlow);
@@ -318,12 +323,12 @@ public class ChatClientFrame extends javax.swing.JFrame {
             this.model.connect(host, channel);
             
             //Set default pseudo if empty pseudo is given
-            if(this.serverChannel.getText().isEmpty()){
+            if(this.pseudo.getText().isEmpty()){
                 this.pseudoName = "anonymous";
-                this.serverChannel.setText(this.pseudoName);
+                this.pseudo.setText(this.pseudoName);
             }
             else{
-                this.pseudoName = this.serverChannel.getText();
+                this.pseudoName = this.pseudo.getText();
             }
             
             //Connected message.
@@ -351,7 +356,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
     private void messageSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageSendActionPerformed
         try {
-            this.model.send(this.messageField.getText());
+            this.model.send(this.pseudoName + " : " + this.messageField.getText());
             this.messageField.setText(null);
         } catch (RemoteException ex) {
             Logger.getLogger(ChatClientFrame.class.getName()).log(Level.SEVERE, null, ex);
