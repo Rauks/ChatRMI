@@ -17,6 +17,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,15 +40,18 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer{
 
     @Override
     public void disparch(String msg) throws RemoteException{
+        Collection<IChatClient> disconnected = new ArrayList<>();
         for(Iterator<IChatClient> it = this.clients.iterator(); it.hasNext();){
             IChatClient c = it.next();
             try{
                 c.receive(msg);
             } catch(RemoteException ex){
-                //Client disconnected
-                this.clients.remove(c);
+                //Client is unreachable/disconnected.
+                disconnected.add(c);
             }
         }
+        //Remove the unreachable/disconnected clients
+        this.clients.removeAll(disconnected);
     }
     
     /**
