@@ -6,6 +6,8 @@ package chat.client;
 
 import chat.itf.IChatClient;
 import chat.itf.IChatServer;
+import java.awt.GraphicsConfiguration;
+import java.awt.Rectangle;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -59,29 +61,35 @@ class ChatClient extends UnicastRemoteObject implements IChatClient{
      */
     public static void main(String[] args){
         try {
-            ChatClient client = new ChatClient();
-            client.connect("localhost");
-            
-            System.out.println("START");
-            client.send("Hello server !");
-            client.send("This is chat !");
-            client.send("Goodbye !");
-            for(Iterator<String> it = client.received.iterator(); it.hasNext();){
-                System.out.println(it.next());
-            }
-            System.out.println("WAIT");
-            
+            final ChatClient client = new ChatClient();
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+             * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
             try {
-                Thread.sleep(10000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(ChatClient.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-            
-            for(Iterator<String> it = client.received.iterator(); it.hasNext();){
-                System.out.println(it.next());
-            }
-            System.out.println("END");
-            
+            //</editor-fold>
+        
+            //Create and display the form
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    ChatClientFrame frame = new ChatClientFrame(client);
+                    GraphicsConfiguration gc = frame.getGraphicsConfiguration();  
+                    Rectangle bounds = gc.getBounds();
+                    frame.setLocation((int) ((bounds.width / 2) - (frame.getSize().width / 2)),  
+                                      (int) ((bounds.height / 2) - (frame.getSize().height / 2)));
+                    frame.setVisible(true);
+                }
+            });
         } catch (RemoteException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }

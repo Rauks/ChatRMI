@@ -165,8 +165,8 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="messageSend" min="-2" pref="85" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="messageField" min="-2" pref="623" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="messageField" pref="623" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
