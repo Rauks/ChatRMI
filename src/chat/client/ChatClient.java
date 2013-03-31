@@ -23,7 +23,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-class ChatClient extends UnicastRemoteObject implements IChatClient, Serializable{
+public class ChatClient extends UnicastRemoteObject implements IChatClient, Serializable{
     private Registry registry;
     private String serverName;
     private ArrayList<ChatClientReceiveListener> chatClientReceiveListeners;
