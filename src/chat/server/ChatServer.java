@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-class ChatServer extends UnicastRemoteObject implements IChatServer{
+public class ChatServer extends UnicastRemoteObject implements IChatServer{
     private ArrayList<IChatClient> clients;
     
     public ChatServer() throws RemoteException{
