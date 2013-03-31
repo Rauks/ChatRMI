@@ -5,6 +5,7 @@
 package chat;
 
 import chat.itf.IChatClient;
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 /**
@@ -12,7 +13,24 @@ import java.rmi.server.UnicastRemoteObject;
  * @author Karl
  */
 public class ChatClient extends UnicastRemoteObject implements IChatClient{
+    public ChatClient() throws RemoteException{
+        
+    }
     
+    @Override
+    public void connect(String host) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void send(String msg) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void receive(String msg) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
     
     /**
      * Launch a Chat client.
@@ -22,4 +40,5 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient{
     public static void main(String[] args){
         
     }
+
 }
