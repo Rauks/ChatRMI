@@ -160,7 +160,7 @@ public class ChatServerFrame extends javax.swing.JFrame {
                 this.serverNameLabel.setEnabled(false);
                 this.startStop.setEnabled(false);
 
-                //Set default name if empty name is given
+                //Set default name if empty channel name is given
                 if(this.serverName.getText().isEmpty()){
                     this.registeredName = "chat";
                     this.serverName.setText(this.registeredName);
