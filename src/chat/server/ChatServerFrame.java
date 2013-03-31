@@ -4,19 +4,32 @@
  */
 package chat.server;
 
+import chat.itf.IChatServer;
+import java.rmi.AccessException;
+import java.rmi.AlreadyBoundException;
+import java.rmi.NotBoundException;
+import java.rmi.Remote;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Karl
  */
 public class ChatServerFrame extends javax.swing.JFrame {
-
+    private boolean isServerRunning;
+    private String registeredName;
+    
     /**
      * Creates new form ChatServerFrame
      */
     public ChatServerFrame() {
+        this.isServerRunning = false;
         initComponents();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,36 +41,77 @@ public class ChatServerFrame extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        serverName = new javax.swing.JTextField();
+        serverNameLabel = new javax.swing.JLabel();
+        buttonPanel = new javax.swing.JPanel();
+        startStop = new javax.swing.JButton();
+        quit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chat Server");
         setResizable(false);
 
-        java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
-        jPanel1Layout.columnWidths = new int[] {0, 5, 0};
-        jPanel1Layout.rowHeights = new int[] {0, 10, 0};
-        jPanel1.setLayout(jPanel1Layout);
+        jPanel1.setLayout(new java.awt.GridBagLayout());
 
-        jLabel1.setText("The server is running...");
+        serverName.setText("chat");
+        serverName.setMaximumSize(new java.awt.Dimension(155, 2147483647));
+        serverName.setMinimumSize(new java.awt.Dimension(155, 20));
+        serverName.setName(""); // NOI18N
+        serverName.setPreferredSize(new java.awt.Dimension(155, 20));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        jPanel1.add(serverName, gridBagConstraints);
+
+        serverNameLabel.setLabelFor(serverName);
+        serverNameLabel.setText("Nom :");
+        serverNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+        serverNameLabel.setMaximumSize(new java.awt.Dimension(153, 20));
+        serverNameLabel.setMinimumSize(new java.awt.Dimension(153, 20));
+        serverNameLabel.setPreferredSize(new java.awt.Dimension(153, 20));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(7, 0, 0, 0);
-        jPanel1.add(jLabel1, gridBagConstraints);
+        jPanel1.add(serverNameLabel, gridBagConstraints);
 
-        jButton1.setText("Stop");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        java.awt.GridBagLayout buttonPanelLayout = new java.awt.GridBagLayout();
+        buttonPanelLayout.columnWidths = new int[] {0, 20, 0};
+        buttonPanelLayout.rowHeights = new int[] {0};
+        buttonPanel.setLayout(buttonPanelLayout);
+
+        startStop.setText("Start");
+        startStop.setMaximumSize(new java.awt.Dimension(70, 23));
+        startStop.setMinimumSize(new java.awt.Dimension(70, 23));
+        startStop.setPreferredSize(new java.awt.Dimension(70, 23));
+        startStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                startStopActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        buttonPanel.add(startStop, gridBagConstraints);
+
+        quit.setText("Quit");
+        quit.setMaximumSize(new java.awt.Dimension(70, 23));
+        quit.setMinimumSize(new java.awt.Dimension(70, 23));
+        quit.setPreferredSize(new java.awt.Dimension(70, 23));
+        quit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                quitActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        buttonPanel.add(quit, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        jPanel1.add(jButton1, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(15, 0, 0, 0);
+        jPanel1.add(buttonPanel, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,27 +119,79 @@ public class ChatServerFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 240, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void startStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startStopActionPerformed
+        try {
+            if(this.isServerRunning){
+                //Disable gui components
+                this.startStop.setEnabled(false);
+
+                //Unregister the server;
+                LocateRegistry.getRegistry().unbind(this.registeredName);
+                Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Unregistered: {0}", new Object[]{this.registeredName});
+
+                //Enable gui components
+                this.isServerRunning = false;
+                this.serverName.setEnabled(true);
+                this.serverNameLabel.setEnabled(true);
+                
+                //Change stop button to start button
+                this.startStop.setText("Start");
+                this.startStop.setEnabled(true);
+            }
+            else{
+                //Disable gui components
+                this.serverName.setEnabled(false);
+                this.serverNameLabel.setEnabled(false);
+                this.startStop.setEnabled(false);
+
+                //Set default name if empty name is given
+                if(this.serverName.getText().isEmpty()){
+                    this.registeredName = "chat";
+                    this.serverName.setText(this.registeredName);
+                }
+                else{
+                    this.registeredName = this.serverName.getText();
+                }
+                
+                //Register the server
+                Remote remote = (IChatServer) new ChatServer();
+                LocateRegistry.getRegistry().rebind(this.registeredName, remote);
+                this.isServerRunning = true;
+                Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Registered: {0} -> {1}", new Object[]{this.registeredName, remote.getClass().getName()});
+                
+                //Change start button to stop button
+                this.startStop.setText("Stop");
+                this.startStop.setEnabled(true);
+            }
+        } catch (NotBoundException | RemoteException ex) {
+            Logger.getLogger(ChatServerFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_startStopActionPerformed
+
+    private void quitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quitActionPerformed
         Runtime.getRuntime().exit(0);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_quitActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel buttonPanel;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton quit;
+    private javax.swing.JTextField serverName;
+    private javax.swing.JLabel serverNameLabel;
+    private javax.swing.JButton startStop;
     // End of variables declaration//GEN-END:variables
 }
