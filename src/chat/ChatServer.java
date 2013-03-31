@@ -8,24 +8,30 @@ import chat.itf.IChatClient;
 import chat.itf.IChatServer;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
  * @author Karl
  */
 public class ChatServer extends UnicastRemoteObject implements IChatServer{
+    private ArrayList<IChatClient> clients;
+    
     public ChatServer() throws RemoteException{
-        
+        this.clients = new ArrayList<>();
     }
 
     @Override
     public void register(IChatClient client) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.clients.add(client);
     }
 
     @Override
     public void disparch(String msg) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        for(Iterator<IChatClient> it = this.clients.iterator(); it.hasNext();){
+            it.next().receive(msg);
+        }
     }
     
     /**
