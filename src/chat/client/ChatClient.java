@@ -2,12 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package chat;
+package chat.client;
 
 import chat.itf.IChatClient;
 import chat.itf.IChatServer;
-import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,9 +20,8 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-public class ChatClient extends UnicastRemoteObject implements IChatClient{
+class ChatClient extends UnicastRemoteObject implements IChatClient{
     private ArrayList<String> received;
-    private String host;
     private Registry registry;
     
     public ChatClient() throws RemoteException{
