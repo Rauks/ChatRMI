@@ -24,13 +24,11 @@ import java.util.logging.Logger;
  * @author Karl
  */
 class ChatClient extends UnicastRemoteObject implements IChatClient, Serializable{
-    private ArrayList<String> received;
     private Registry registry;
     private String serverName;
     private ArrayList<ChatClientReceiveListener> chatClientReceiveListeners;
     
     public ChatClient() throws RemoteException{
-        this.received = new ArrayList<>();
         this.chatClientReceiveListeners = new ArrayList<>();
     }
     
@@ -56,7 +54,6 @@ class ChatClient extends UnicastRemoteObject implements IChatClient, Serializabl
 
     @Override
     public void receive(String msg) throws RemoteException{
-        this.received.add(msg);
         this.fireEvent(new ChatClientReceiveEvent(msg));
     }
     
