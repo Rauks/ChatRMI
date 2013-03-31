@@ -5,20 +5,42 @@
 package chat.client;
 
 import chat.itf.IChatClient;
+import java.awt.GraphicsConfiguration;
+import java.awt.Rectangle;
+import java.rmi.RemoteException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFrame;
 
 /**
  *
  * @author Karl
  */
 public class ChatClientFrame extends javax.swing.JFrame {
-    private IChatClient model;
+    private ChatClient model;
+    private String pseudoName;
     
     /**
      * Creates new form ChatClientFrame
      */
-    public ChatClientFrame(IChatClient model) {
+    public ChatClientFrame(ChatClient model) {
         this.model = model;
         initComponents();
+        this.model.addListener(this.chatFlow);
+    }
+    
+    /**
+     * Show the connection error frame.
+     * The current frame will be closed. The error frame closure initiate the runtime stopping procedure in error.
+     */
+    private void showConnectionError(){
+        JFrame frame = this.errorConnectionDialog;
+        GraphicsConfiguration gc = frame.getGraphicsConfiguration();  
+        Rectangle bounds = gc.getBounds();
+        frame.setLocation((int) ((bounds.width / 2) - (frame.getSize().width / 2)),  
+                          (int) ((bounds.height / 2) - (frame.getSize().height / 2)));
+        this.setVisible(false);
+        frame.setVisible(true);
     }
 
     /**
@@ -31,12 +53,16 @@ public class ChatClientFrame extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        errorConnectionDialog = new javax.swing.JFrame();
+        errorConnectionPanel = new javax.swing.JPanel();
+        errorConnectionQuit = new javax.swing.JButton();
+        errorConnectionMessage = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         optionsPanel = new javax.swing.JPanel();
         serverChannelLabel = new javax.swing.JLabel();
         serverHostLabel = new javax.swing.JLabel();
         pseudoLabel = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        connect = new javax.swing.JButton();
         serverHost = new javax.swing.JTextField();
         serverChannel = new javax.swing.JTextField();
         pseudo = new javax.swing.JTextField();
@@ -44,11 +70,64 @@ public class ChatClientFrame extends javax.swing.JFrame {
         messageSend = new javax.swing.JButton();
         messageField = new javax.swing.JTextField();
         flowPanel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        chatFlowScroll = new javax.swing.JScrollPane();
+        chatFlow = new chat.client.ChatFlow();
         menu = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuFileQuit = new javax.swing.JMenuItem();
+
+        errorConnectionDialog.setTitle("Error");
+        errorConnectionDialog.setMinimumSize(new java.awt.Dimension(220, 110));
+        errorConnectionDialog.setPreferredSize(new java.awt.Dimension(220, 110));
+        errorConnectionDialog.setResizable(false);
+        errorConnectionDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                errorConnectionDialogWindowClosing(evt);
+            }
+        });
+
+        errorConnectionPanel.setMinimumSize(new java.awt.Dimension(155, 47));
+        errorConnectionPanel.setPreferredSize(new java.awt.Dimension(155, 47));
+        java.awt.GridBagLayout jPanel1Layout = new java.awt.GridBagLayout();
+        jPanel1Layout.columnWidths = new int[] {0};
+        jPanel1Layout.rowHeights = new int[] {0, 10, 0};
+        errorConnectionPanel.setLayout(jPanel1Layout);
+
+        errorConnectionQuit.setText("Quit");
+        errorConnectionQuit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                errorConnectionQuitActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        errorConnectionPanel.add(errorConnectionQuit, gridBagConstraints);
+
+        errorConnectionMessage.setForeground(new java.awt.Color(204, 0, 0));
+        errorConnectionMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        errorConnectionMessage.setText("Connection error.");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        errorConnectionPanel.add(errorConnectionMessage, gridBagConstraints);
+
+        javax.swing.GroupLayout errorConnectionDialogLayout = new javax.swing.GroupLayout(errorConnectionDialog.getContentPane());
+        errorConnectionDialog.getContentPane().setLayout(errorConnectionDialogLayout);
+        errorConnectionDialogLayout.setHorizontalGroup(
+            errorConnectionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorConnectionDialogLayout.createSequentialGroup()
+                .addContainerGap(22, Short.MAX_VALUE)
+                .addComponent(errorConnectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(23, Short.MAX_VALUE))
+        );
+        errorConnectionDialogLayout.setVerticalGroup(
+            errorConnectionDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(errorConnectionDialogLayout.createSequentialGroup()
+                .addContainerGap(30, Short.MAX_VALUE)
+                .addComponent(errorConnectionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Chat Client");
@@ -56,16 +135,19 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.BorderLayout());
 
+        serverChannelLabel.setLabelFor(serverChannel);
         serverChannelLabel.setText("Channel :");
 
+        serverHostLabel.setLabelFor(serverHost);
         serverHostLabel.setText("Server :");
 
+        pseudoLabel.setLabelFor(pseudo);
         pseudoLabel.setText("Pseudo :");
 
-        jButton1.setText("Connect");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        connect.setText("Connect");
+        connect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                connectActionPerformed(evt);
             }
         });
 
@@ -92,7 +174,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pseudo, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         optionsPanelLayout.setVerticalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,7 +182,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
                 .addComponent(serverChannelLabel)
                 .addComponent(serverHostLabel)
                 .addComponent(pseudoLabel)
-                .addComponent(jButton1)
+                .addComponent(connect)
                 .addComponent(serverHost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(serverChannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -110,6 +192,11 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         messageSend.setText("Send");
         messageSend.setEnabled(false);
+        messageSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                messageSendActionPerformed(evt);
+            }
+        });
 
         messageField.setEnabled(false);
 
@@ -131,22 +218,27 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         mainPanel.add(sendPanel, java.awt.BorderLayout.PAGE_END);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setEnabled(false);
-        jScrollPane1.setViewportView(jTextArea1);
+        chatFlowScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        chatFlowScroll.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+
+        chatFlow.setColumns(20);
+        chatFlow.setLineWrap(true);
+        chatFlow.setRows(5);
+        chatFlow.setEnabled(false);
+        chatFlow.setFocusable(false);
+        chatFlowScroll.setViewportView(chatFlow);
 
         javax.swing.GroupLayout flowPanelLayout = new javax.swing.GroupLayout(flowPanel);
         flowPanel.setLayout(flowPanelLayout);
         flowPanelLayout.setHorizontalGroup(
             flowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+            .addComponent(chatFlowScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
         );
         flowPanelLayout.setVerticalGroup(
             flowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(flowPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                .addComponent(chatFlowScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -191,15 +283,92 @@ public class ChatClientFrame extends javax.swing.JFrame {
         Runtime.getRuntime().exit(0);
     }//GEN-LAST:event_menuFileQuitActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void connectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_connectActionPerformed
+        try {
+            //Disable connection gui
+            this.pseudoLabel.setEnabled(false);
+            this.pseudo.setEnabled(false);
+            this.serverChannelLabel.setEnabled(false);
+            this.serverChannel.setEnabled(false);
+            this.serverHostLabel.setEnabled(false);
+            this.serverHost.setEnabled(false);
+            this.connect.setEnabled(false);
+
+            //Set default host if empty host is given
+            String host;
+            if(this.serverHost.getText().isEmpty()){
+                host = "localhost";
+                this.serverHost.setText(host);
+            }
+            else{
+                host = this.serverHost.getText();
+            }
+            
+            //Set default channel name if empty channel name is given
+            String channel;
+            if(this.serverChannel.getText().isEmpty()){
+                channel = "chat";
+                this.serverChannel.setText(channel);
+            }
+            else{
+                channel = this.serverChannel.getText();
+            }
+            
+            //Connect the model to the server
+            this.model.connect(host, channel);
+            
+            //Set default pseudo if empty pseudo is given
+            if(this.serverChannel.getText().isEmpty()){
+                this.pseudoName = "anonymous";
+                this.serverChannel.setText(this.pseudoName);
+            }
+            else{
+                this.pseudoName = this.serverChannel.getText();
+            }
+            
+            //Connected message.
+            this.chatFlow.setText("Connected.");
+            
+            //Active messages sending gui
+            this.chatFlow.setEnabled(true);
+            this.messageField.setEnabled(true);
+            this.messageSend.setEnabled(true);
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+            
+            this.showConnectionError();
+        }
+    }//GEN-LAST:event_connectActionPerformed
+
+    private void errorConnectionQuitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_errorConnectionQuitActionPerformed
+        Runtime.getRuntime().exit(1);
+    }//GEN-LAST:event_errorConnectionQuitActionPerformed
+
+    private void errorConnectionDialogWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_errorConnectionDialogWindowClosing
+        Runtime.getRuntime().exit(1);
+    }//GEN-LAST:event_errorConnectionDialogWindowClosing
+
+    private void messageSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_messageSendActionPerformed
+        try {
+            this.model.send(this.messageField.getText());
+            this.messageField.setText(null);
+        } catch (RemoteException ex) {
+            Logger.getLogger(ChatClientFrame.class.getName()).log(Level.SEVERE, null, ex);
+            
+            this.showConnectionError();
+        }
+    }//GEN-LAST:event_messageSendActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private chat.client.ChatFlow chatFlow;
+    private javax.swing.JScrollPane chatFlowScroll;
+    private javax.swing.JButton connect;
+    private javax.swing.JFrame errorConnectionDialog;
+    private javax.swing.JLabel errorConnectionMessage;
+    private javax.swing.JPanel errorConnectionPanel;
+    private javax.swing.JButton errorConnectionQuit;
     private javax.swing.JPanel flowPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JMenuBar menu;
     private javax.swing.JMenu menuFile;
