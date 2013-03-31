@@ -5,6 +5,7 @@
 package chat.itf;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -16,19 +17,19 @@ public interface IChatClient extends Remote{
      * 
      * @param host The chat server's host.
      */
-    public void connect(String host);
+    public void connect(String host) throws RemoteException;
     
     /**
      * Send a message to the server.
      * 
      * @param msg The message to send.
      */
-    public void send(String msg);
+    public void send(String msg) throws RemoteException;
     
     /**
      * Reveive a message from the server.
      * 
      * @param msg The message to receive.
      */
-    public void receive(String msg);
+    public void receive(String msg) throws RemoteException;
 }
