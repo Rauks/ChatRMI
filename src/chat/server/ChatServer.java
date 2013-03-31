@@ -6,6 +6,8 @@ package chat.server;
 
 import chat.itf.IChatClient;
 import chat.itf.IChatServer;
+import java.awt.GraphicsConfiguration;
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
@@ -57,7 +59,6 @@ class ChatServer extends UnicastRemoteObject implements IChatServer{
      */
     public static void main(String[] args){
         try {
-            Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Server start.");
             String name = "chat";
             Remote remote = (IChatServer) new ChatServer();
             
@@ -66,13 +67,35 @@ class ChatServer extends UnicastRemoteObject implements IChatServer{
             Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Registered: {0} -> {1}[{2}]", new Object[]{name, remote.getClass().getName(), remote});
             
             //Keep the server running
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+             * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+             */
             try {
-                System.in.read();
-            } catch (IOException ex) {
-                Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
+                }
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(ChatServerFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-            
-            Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Server stopped.");
+            //</editor-fold>
+
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    ChatServerFrame frame = new ChatServerFrame();
+                    GraphicsConfiguration gc = frame.getGraphicsConfiguration();  
+                    Rectangle bounds = gc.getBounds();
+                    frame.setLocation((int) ((bounds.width / 2) - (frame.getSize().width / 2)),  
+                                      (int) ((bounds.height / 2) - (frame.getSize().height / 2)));
+                    frame.setVisible(true);
+                }
+            });
             
         } catch (AlreadyBoundException | RemoteException ex) {
             Logger.getLogger(ChatServer.class.getName()).log(Level.SEVERE, null, ex);
