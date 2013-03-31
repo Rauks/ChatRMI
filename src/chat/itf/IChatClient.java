@@ -16,8 +16,9 @@ public interface IChatClient extends Remote{
      * Connect the client to a server designed by his host.
      * 
      * @param host The chat server's host.
+     * @param name Server name in RMIregistry.
      */
-    public void connect(String host) throws RemoteException;
+    public void connect(String host, String name) throws RemoteException;
     
     /**
      * Send a message to the server.

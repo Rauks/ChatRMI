@@ -8,6 +8,7 @@ import chat.itf.IChatClient;
 import chat.itf.IChatServer;
 import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
+import java.io.Serializable;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -22,19 +23,23 @@ import java.util.logging.Logger;
  *
  * @author Karl
  */
-class ChatClient extends UnicastRemoteObject implements IChatClient{
+class ChatClient extends UnicastRemoteObject implements IChatClient, Serializable{
     private ArrayList<String> received;
     private Registry registry;
+    private String serverName;
+    private ArrayList<ChatClientReceiveListener> chatClientReceiveListeners;
     
     public ChatClient() throws RemoteException{
         this.received = new ArrayList<>();
+        this.chatClientReceiveListeners = new ArrayList<>();
     }
     
     @Override
-    public void connect(String host) throws RemoteException{
+    public void connect(String host, String name) throws RemoteException{
         this.registry = LocateRegistry.getRegistry(host, IChatServer.DEFAULT_PORT);
+        this.serverName = name;
         try {
-            ((IChatServer) this.registry.lookup("chat")).register(this);
+            ((IChatServer) this.registry.lookup(this.serverName)).register(this);
         } catch (NotBoundException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -43,7 +48,7 @@ class ChatClient extends UnicastRemoteObject implements IChatClient{
     @Override
     public void send(String msg) throws RemoteException{
         try {
-            ((IChatServer) this.registry.lookup("chat")).disparch(msg);
+            ((IChatServer) this.registry.lookup(this.serverName)).disparch(msg);
         } catch (NotBoundException ex) {
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -52,6 +57,36 @@ class ChatClient extends UnicastRemoteObject implements IChatClient{
     @Override
     public void receive(String msg) throws RemoteException{
         this.received.add(msg);
+        this.fireEvent(new ChatClientReceiveEvent(msg));
+    }
+    
+    /**
+     * Add a ChatClientReceiveListener to the listeners.
+     * 
+     * @param l The listener to add.
+     */
+    public void addListener(ChatClientReceiveListener l){
+        this.chatClientReceiveListeners.add(l);
+    }
+    
+    /**
+     * Remove a ChatClientReceiveListener to the listeners.
+     * 
+     * @param l The listener to remove.
+     */
+    public void removeListener(ChatClientReceiveListener l){
+        this.chatClientReceiveListeners.remove(l);
+    }
+    
+    /**
+     * Send the event to the listeners.
+     * 
+     * @param evt The event to send.
+     */
+    private void fireEvent(ChatClientReceiveEvent evt){
+        for(Iterator<ChatClientReceiveListener> it = this.chatClientReceiveListeners.iterator(); it.hasNext();){
+            it.next().receive(evt);
+        }
     }
     
     /**
@@ -81,6 +116,7 @@ class ChatClient extends UnicastRemoteObject implements IChatClient{
         
             //Create and display the form
             java.awt.EventQueue.invokeLater(new Runnable() {
+                @Override
                 public void run() {
                     ChatClientFrame frame = new ChatClientFrame(client);
                     GraphicsConfiguration gc = frame.getGraphicsConfiguration();  
@@ -94,5 +130,5 @@ class ChatClient extends UnicastRemoteObject implements IChatClient{
             Logger.getLogger(ChatClient.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
 }
