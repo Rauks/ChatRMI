@@ -94,7 +94,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
         jPanel1Layout.rowHeights = new int[] {0, 10, 0};
         errorConnectionPanel.setLayout(jPanel1Layout);
 
-        errorConnectionQuit.setText("Quit");
+        errorConnectionQuit.setText("Quitter");
         errorConnectionQuit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 errorConnectionQuitActionPerformed(evt);
@@ -107,7 +107,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         errorConnectionMessage.setForeground(new java.awt.Color(204, 0, 0));
         errorConnectionMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        errorConnectionMessage.setText("Connection error.");
+        errorConnectionMessage.setText("Erreur de connexion.");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -178,9 +178,10 @@ public class ChatClientFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pseudoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pseudo, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(2, 2, 2))
         );
         optionsPanelLayout.setVerticalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,9 +217,9 @@ public class ChatClientFrame extends javax.swing.JFrame {
         sendPanelLayout.setHorizontalGroup(
             sendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(sendPanelLayout.createSequentialGroup()
-                .addComponent(messageSend, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(messageSend, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 623, Short.MAX_VALUE))
+                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE))
         );
         sendPanelLayout.setVerticalGroup(
             sendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
