@@ -4,7 +4,6 @@
  */
 package chat.client;
 
-import chat.itf.IChatClient;
 import java.awt.GraphicsConfiguration;
 import java.awt.Rectangle;
 import java.rmi.RemoteException;
