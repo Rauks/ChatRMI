@@ -47,7 +47,7 @@
           <SubComponents>
             <Component class="javax.swing.JButton" name="errorConnectionQuit">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Quit"/>
+                <Property name="text" type="java.lang.String" value="Quitter"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="errorConnectionQuitActionPerformed"/>
@@ -64,7 +64,7 @@
                   <Color blue="0" green="0" red="cc" type="rgb"/>
                 </Property>
                 <Property name="horizontalAlignment" type="int" value="0"/>
-                <Property name="text" type="java.lang.String" value="Connection error."/>
+                <Property name="text" type="java.lang.String" value="Erreur de connexion."/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
@@ -357,9 +357,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="pseudoLabel" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pseudo" pref="160" max="32767" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="connect" min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="pseudo" min="-2" pref="150" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="connect" min="-2" pref="97" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -441,9 +442,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="messageSend" min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="messageSend" min="-2" pref="97" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="messageField" pref="623" max="32767" attributes="0"/>
+                      <Component id="messageField" pref="611" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
