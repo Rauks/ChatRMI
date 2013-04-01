@@ -13,6 +13,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,6 +26,8 @@ import java.util.logging.Logger;
  * @author Karl
  */
 public class ChatServer extends UnicastRemoteObject implements IChatServer{
+    public static Registry RMI_REGISTRY; 
+    
     private ArrayList<IChatClient> clients;
     
     public ChatServer() throws RemoteException{
@@ -60,7 +63,7 @@ public class ChatServer extends UnicastRemoteObject implements IChatServer{
     public static void main(String[] args){
         //Create registry. (replace rmiregistry separated process)
         try {
-            LocateRegistry.createRegistry(IChatServer.DEFAULT_PORT);
+            RMI_REGISTRY = LocateRegistry.createRegistry(IChatServer.DEFAULT_PORT);
             
             /* Set the Nimbus look and feel */
             //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

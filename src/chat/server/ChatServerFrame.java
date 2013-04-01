@@ -142,7 +142,7 @@ public class ChatServerFrame extends javax.swing.JFrame {
                 this.startStop.setEnabled(false);
 
                 //Unregister the server;
-                LocateRegistry.getRegistry().unbind(this.registeredName);
+                ChatServer.RMI_REGISTRY.unbind(this.registeredName);
                 Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Unregistered: {0}", new Object[]{this.registeredName});
 
                 //Enable gui components
@@ -171,7 +171,7 @@ public class ChatServerFrame extends javax.swing.JFrame {
                 
                 //Register the server
                 Remote remote = (IChatServer) new ChatServer();
-                LocateRegistry.getRegistry().rebind(this.registeredName, remote);
+                ChatServer.RMI_REGISTRY.rebind(this.registeredName, remote);
                 this.isServerRunning = true;
                 Logger.getLogger(ChatServer.class.getName()).log(Level.INFO, "Registered: {0} -> {1}", new Object[]{this.registeredName, remote.getClass().getName()});
                 
