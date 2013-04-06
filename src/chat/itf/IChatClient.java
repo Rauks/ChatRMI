@@ -17,6 +17,7 @@ public interface IChatClient extends Remote{
      * 
      * @param host The chat server's host.
      * @param name Server name in RMIregistry.
+     * @throws RemoteException If RMI error occurs.
      */
     public void connect(String host, String name) throws RemoteException;
     
@@ -24,6 +25,7 @@ public interface IChatClient extends Remote{
      * Send a message to the server.
      * 
      * @param msg The message to send.
+     * @throws RemoteException If RMI error occurs.
      */
     public void send(String msg) throws RemoteException;
     
@@ -31,6 +33,7 @@ public interface IChatClient extends Remote{
      * Reveive a message from the server.
      * 
      * @param msg The message to receive.
+     * @throws RemoteException If RMI error occurs.
      */
     public void receive(String msg) throws RemoteException;
 }

@@ -415,19 +415,25 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="localhost"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="serverChannel">
               <Properties>
                 <Property name="text" type="java.lang.String" value="chat"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serverChannelActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JTextField" name="pseudo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="anonymous"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="connectActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
