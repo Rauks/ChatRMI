@@ -136,12 +136,15 @@ public class ChatClientFrame extends javax.swing.JFrame {
 
         mainPanel.setLayout(new java.awt.BorderLayout());
 
+        serverChannelLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         serverChannelLabel.setLabelFor(serverChannel);
         serverChannelLabel.setText("Channel :");
 
+        serverHostLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         serverHostLabel.setLabelFor(serverHost);
         serverHostLabel.setText("Serveur :");
 
+        pseudoLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         pseudoLabel.setLabelFor(pseudo);
         pseudoLabel.setText("Pseudo :");
 
@@ -178,17 +181,17 @@ public class ChatClientFrame extends javax.swing.JFrame {
         optionsPanelLayout.setHorizontalGroup(
             optionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(optionsPanelLayout.createSequentialGroup()
-                .addComponent(serverHostLabel)
+                .addComponent(serverHostLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(serverHost, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(serverChannelLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(serverChannelLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(serverChannel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pseudoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pseudoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pseudo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(connect, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2))
@@ -229,7 +232,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
             .addGroup(sendPanelLayout.createSequentialGroup()
                 .addComponent(messageSend, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 611, Short.MAX_VALUE))
+                .addComponent(messageField, javax.swing.GroupLayout.DEFAULT_SIZE, 633, Short.MAX_VALUE))
         );
         sendPanelLayout.setVerticalGroup(
             sendPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +258,7 @@ public class ChatClientFrame extends javax.swing.JFrame {
         flowPanel.setLayout(flowPanelLayout);
         flowPanelLayout.setHorizontalGroup(
             flowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(chatFlowScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
+            .addComponent(chatFlowScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 736, Short.MAX_VALUE)
         );
         flowPanelLayout.setVerticalGroup(
             flowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

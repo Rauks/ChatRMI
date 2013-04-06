@@ -347,17 +347,17 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="serverHostLabel" min="-2" max="-2" attributes="0"/>
+                      <Component id="serverHostLabel" min="-2" pref="55" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="serverHost" min="-2" pref="150" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="serverChannelLabel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="serverChannelLabel" min="-2" pref="58" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="serverChannel" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pseudoLabel" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="pseudoLabel" min="-2" pref="54" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="pseudo" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="pseudo" min="-2" pref="144" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="connect" min="-2" pref="97" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
@@ -381,6 +381,7 @@
           <SubComponents>
             <Component class="javax.swing.JLabel" name="serverChannelLabel">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="serverChannel"/>
                 </Property>
@@ -389,6 +390,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="serverHostLabel">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="serverHost"/>
                 </Property>
@@ -397,6 +399,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="pseudoLabel">
               <Properties>
+                <Property name="horizontalAlignment" type="int" value="4"/>
                 <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="pseudo"/>
                 </Property>
@@ -450,7 +453,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="messageSend" min="-2" pref="97" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="messageField" pref="611" max="32767" attributes="0"/>
+                      <Component id="messageField" pref="633" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -493,7 +496,7 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="chatFlowScroll" alignment="0" pref="714" max="32767" attributes="0"/>
+                  <Component id="chatFlowScroll" alignment="0" pref="736" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
