@@ -61,15 +61,17 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient, Seri
      * Add a ChatClientReceiveListener to the listeners.
      * 
      * @param l The listener to add.
+     * @see ChatClientReceiveListener
      */
     public void addListener(ChatClientReceiveListener l){
         this.chatClientReceiveListeners.add(l);
     }
     
     /**
-     * Remove a ChatClientReceiveListener to the listeners.
+     * Remove a ChatClientReceiveListener from the listeners.
      * 
      * @param l The listener to remove.
+     * @see ChatClientReceiveListener
      */
     public void removeListener(ChatClientReceiveListener l){
         this.chatClientReceiveListeners.remove(l);
@@ -79,6 +81,7 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient, Seri
      * Send the event to the listeners.
      * 
      * @param evt The event to send.
+     * @see ChatClientReceiveEvent
      */
     private void fireEvent(ChatClientReceiveEvent evt){
         for(Iterator<ChatClientReceiveListener> it = this.chatClientReceiveListeners.iterator(); it.hasNext();){

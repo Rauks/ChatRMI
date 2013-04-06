@@ -18,6 +18,7 @@ public interface IChatServer extends Remote{
      * Register a client to the server's client list.
      * 
      * @param client The client to register.
+     * @throws RemoteException If RMI error occurs.
      */
     public void register(IChatClient client) throws RemoteException;
     
@@ -25,6 +26,7 @@ public interface IChatServer extends Remote{
      * Send a message to all the server's clients.
      * 
      * @param msg The message to send.
+     * @throws RemoteException If RMI error occurs.
      */
     public void disparch(String msg) throws RemoteException;
 }

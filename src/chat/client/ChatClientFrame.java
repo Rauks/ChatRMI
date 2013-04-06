@@ -153,15 +153,25 @@ public class ChatClientFrame extends javax.swing.JFrame {
         });
 
         serverHost.setText("localhost");
+        serverHost.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectActionPerformed(evt);
+            }
+        });
 
         serverChannel.setText("chat");
         serverChannel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                serverChannelActionPerformed(evt);
+                connectActionPerformed(evt);
             }
         });
 
         pseudo.setText("anonymous");
+        pseudo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                connectActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout optionsPanelLayout = new javax.swing.GroupLayout(optionsPanel);
         optionsPanel.setLayout(optionsPanelLayout);
@@ -386,10 +396,6 @@ public class ChatClientFrame extends javax.swing.JFrame {
             this.showConnectionError();
         }
     }//GEN-LAST:event_messageSendActionPerformed
-
-    private void serverChannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverChannelActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_serverChannelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private chat.client.ChatFlow chatFlow;

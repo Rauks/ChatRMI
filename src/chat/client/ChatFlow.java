@@ -18,19 +18,31 @@ public class ChatFlow extends JTextArea implements Serializable, ChatClientRecei
         this.autoTextScroll = false;
     }
 
+    /**
+     * Return the current value of the auto-scroll option.
+     * 
+     * @return <code>true</code> if the auto-scroll is activated.
+     */
     public boolean isAutoTextScroll() {
         return autoTextScroll;
     }
 
+    /**
+     * If the auto-scroll is set to <code>true</code> the textarea will scroll automatically at the bottom when a new text is added. 
+     * 
+     * @param autoScroll Active or desactive the auto-scroll
+     */
     public void setAutoTextScroll(boolean autoScroll) {
         this.autoTextScroll = autoScroll;
     }
     
     /**
      * Append the event's message to the end of the flow.
-     * Parent vertical scrollbar is scrolled to the bottom only if it is already at the bottom before the event reception.
+     * <p>
+     * If the auto-scroll is set to <code>true</code> the textarea will scroll automatically at the bottom when a new text is added. 
      * 
-     * @param evt The received event. 
+     * @param evt The received event.
+     * @see ChatFlow#setAutoTextScroll
      */
     @Override
     public void receive(ChatClientReceiveEvent evt) {
