@@ -45,7 +45,7 @@ public class ChatFlow extends JTextArea implements Serializable, ChatClientRecei
      * @see ChatFlow#setAutoTextScroll
      */
     @Override
-    public void receive(ChatClientReceiveEvent evt) {
+    public void chatClientReceivePerformed(ChatClientReceiveEvent evt) {
         this.append("\n");
         this.append(evt.getMessage());
         

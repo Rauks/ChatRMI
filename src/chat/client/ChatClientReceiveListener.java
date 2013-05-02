@@ -9,5 +9,5 @@ package chat.client;
  * @author Karl
  */
 public interface ChatClientReceiveListener {
-    public void receive(ChatClientReceiveEvent evt);
+    public void chatClientReceivePerformed(ChatClientReceiveEvent evt);
 }

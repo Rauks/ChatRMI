@@ -85,7 +85,7 @@ public class ChatClient extends UnicastRemoteObject implements IChatClient, Seri
      */
     private void fireEvent(ChatClientReceiveEvent evt){
         for(Iterator<ChatClientReceiveListener> it = this.chatClientReceiveListeners.iterator(); it.hasNext();){
-            it.next().receive(evt);
+            it.next().chatClientReceivePerformed(evt);
         }
     }
     
